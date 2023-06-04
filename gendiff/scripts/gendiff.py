@@ -1,5 +1,5 @@
 import argparse
-
+import
 
 def main():
     parser = argparse.ArgumentParser(description='Compares two configuration files and shows a difference.')
@@ -12,3 +12,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+def generate_diff(file_path1, file_path2):
