@@ -31,7 +31,8 @@ def generate_diff(file_path1, file_path2):
             if json1[key] == json2[key]:
                 result = f'{result}\n   {key}: {json1[key]}'
             else:
-                result = f'{result}\n - {key}: {json1[key]}\n + {key}: {json2[key]}'
+                result = f'{result}\n - {key}: ' \
+                         f'{json1[key]}\n + {key}: {json2[key]}'
         elif key in json1:
             result = f'{result}\n - {key}: {json1[key]}'
         else:
