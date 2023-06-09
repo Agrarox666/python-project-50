@@ -8,5 +8,5 @@ build:
 	poetry build
 publish:
 	poetry publish --dry-run
-linter:
+lint:
 	poetry run flake8 gendiff
