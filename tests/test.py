@@ -1,7 +1,4 @@
-import os.path
-
 from gendiff.scripts.gendiff import generate_diff
-from pathlib import Path
 def test_gendiff():
 
     file_path1 = 'fixtures/file1.json'
