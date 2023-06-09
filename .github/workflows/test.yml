@@ -22,7 +22,7 @@ jobs:
     - name: Code Climate Coverage Action
       uses: paambaati/codeclimate-action@v4.0.0
       env:
-        CC_TEST_REPORTER_ID: ${{ dc9f9382c64db82e97675b2d65892897cb7e45a3bb3158b36ba310e4ca4e28f2 }}
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:
         coverageCommand: make test
 
