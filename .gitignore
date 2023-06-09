@@ -1,5 +1,5 @@
 .idea/
-Makefile/
+Makefile
 __pycache__
 dist/
 setup.cfg
