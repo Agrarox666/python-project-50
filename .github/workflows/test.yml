@@ -12,6 +12,9 @@ jobs:
       run: | 
         pip install poetry
         make install
+        make build
+        make force-reinstall
+
     - name: Run linter
       run: make lint
     - name: Run tests
