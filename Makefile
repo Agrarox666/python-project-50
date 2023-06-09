@@ -10,3 +10,5 @@ publish:
 	poetry publish --dry-run
 lint:
 	poetry run flake8 gendiff
+test:
+	python3 tests/test.py
