@@ -12,3 +12,5 @@ lint:
 	poetry run flake8 gendiff
 test:
 	python3 tests/test.py
+test-coverage:
+	poetry run pytest --cov=hexlet_python_package --cov-report xml
