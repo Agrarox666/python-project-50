@@ -1,6 +1,8 @@
 import argparse
 import json
 
+import yaml
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -18,25 +20,38 @@ if __name__ == '__main__':
 
 def generate_diff(file_path1, file_path2):
 
-    json1 = json.load(open(file_path1))
-    json2 = json.load(open(file_path2))
+    if file_path1[-5:] == '.json' and file_path2[-5:] == '.json':
+        file1 = json.load(open(file_path1))
+        file2 = json.load(open(file_path2))
 
-    keys = set(json1.keys())
-    keys.update(json2.keys())
+    elif file_path1[-4:] == '.yml' and file_path2[-4:] == '.yml':
+        file1 = yaml.load(open(file_path1))
+        file2 = yaml.load(open(file_path2))
+    else:
+        print('Files are in the wrong format')
+        return 0
+
+    return parser(file1, file2)
+
+
+def parser(file1, file2):
+
+    keys = set(file1.keys())
+    keys.update(file2.keys())
     keys = sorted(keys)
-    result = '{'
 
+    result = '{'
     for key in keys:
-        if key in json1 and key in json2:
-            if json1[key] == json2[key]:
-                result = f'{result}\n   {key}: {json1[key]}'
+        if key in file1 and key in file2:
+            if file1[key] == file2[key]:
+                result = f'{result}\n    {key}: {file1[key]}'
             else:
-                result = f'{result}\n - {key}: ' \
-                         f'{json1[key]}\n + {key}: {json2[key]}'
-        elif key in json1:
-            result = f'{result}\n - {key}: {json1[key]}'
+                result = f'{result}\n  - {key}: ' \
+                         f'{file1[key]}\n  + {key}: {file2[key]}'
+        elif key in file1:
+            result = f'{result}\n  - {key}: {file1[key]}'
         else:
-            result = f'{result}\n + {key}: {json2[key]}'
+            result = f'{result}\n  + {key}: {file2[key]}'
     result += '\n}'
 
     return result
