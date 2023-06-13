@@ -14,4 +14,4 @@ def test_parser():
     file_path2 = 'tests/fixtures/filepath2.yml'
     file_path_expected = 'tests/fixtures/expected2.txt'
 
-    assert parser(file_path1, file_path2) == (open(file_path_expected).read())
+    assert generate_diff(file_path1, file_path2) == (open(file_path_expected).read())
