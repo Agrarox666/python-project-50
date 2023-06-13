@@ -18,7 +18,6 @@ if __name__ == '__main__':
     main()
 
 
-
 def generate_diff(file_path1, file_path2):
 
     if file_path1[-5:] == '.json' and file_path2[-5:] == '.json':
@@ -56,4 +55,3 @@ def parser(file1, file2):
     result += '\n}'
 
     return result
-
