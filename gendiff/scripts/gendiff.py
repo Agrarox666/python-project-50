@@ -34,7 +34,7 @@ def generate_diff(file_path1, file_path2):
     return parser(file1, file2)
 
 
-def parser(file1, file2):
+def parser(file1: dict, file2: dict):
 
     keys = set(file1.keys())
     keys.update(file2.keys())
