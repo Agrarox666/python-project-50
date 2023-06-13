@@ -18,6 +18,7 @@ if __name__ == '__main__':
     main()
 
 
+
 def generate_diff(file_path1, file_path2):
 
     if file_path1[-5:] == '.json' and file_path2[-5:] == '.json':
@@ -25,8 +26,8 @@ def generate_diff(file_path1, file_path2):
         file2 = json.load(open(file_path2))
 
     elif file_path1[-4:] == '.yml' and file_path2[-4:] == '.yml':
-        file1 = dict(yaml.load(open(file_path1)))
-        file2 = dict(yaml.load(open(file_path2)))
+        file1 = yaml.load(open(file_path1), Loader=yaml.FullLoader)
+        file2 = yaml.load(open(file_path2), Loader=yaml.FullLoader)
     else:
         print('Files are in the wrong format')
         return 0
@@ -55,3 +56,4 @@ def parser(file1, file2):
     result += '\n}'
 
     return result
+
