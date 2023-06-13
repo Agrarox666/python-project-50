@@ -31,6 +31,9 @@ def generate_diff(file_path1, file_path2):
         print('Files are in the wrong format')
         return 0
 
+    clean_booleans(file1)
+    clean_booleans(file2)
+
     return parser(file1, file2)
 
 
@@ -55,3 +58,11 @@ def parser(file1: dict, file2: dict):
     result += '\n}'
 
     return result
+
+def clean_booleans(_dict):
+
+    for key in _dict:
+        if _dict[key] is True:
+            _dict[key] = 'true'
+        elif _dict[key] is False:
+            _dict[key] = 'false'
