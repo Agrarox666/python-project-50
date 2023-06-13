@@ -59,6 +59,7 @@ def parser(file1: dict, file2: dict):
 
     return result
 
+
 def clean_booleans(_dict):
 
     for key in _dict:
