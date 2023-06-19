@@ -45,7 +45,8 @@ def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
             else:
                 add = str(node[key])
 
-            result = f'{result}{((spacesCount * depth) - 2) * replacer}{str(key)}: {add}\n'
+            space = ((spacesCount * depth) - 2) * replacer
+            result = f'{result}{space}{str(key)}: {add}\n'
 
         result += replacer * (depth - 1) * spacesCount + '}'
 
@@ -54,6 +55,7 @@ def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
     return walk(diff_string, 1)
 
 
+# flake8: noqa: C901
 def create_diff(file1: dict, file2: dict):
     def walk(node1: dict, node2: dict, depth=0):
 
@@ -63,32 +65,28 @@ def create_diff(file1: dict, file2: dict):
         diff = {}
 
         for key in keys:
+            value1 = node1[key]
+            value2 = node2[key]
             if key in node1 and key in node2:
-                if node1[key] == node2[key]:
-                    new_key = '  ' + key
-                    diff[new_key] = node1[key]
+                if value1 == value2:
+                    diff[f'  {key}'] = value1
                 else:
-                    if isinstance(node1[key], dict) and isinstance(node2[key], dict):
-                        new_key = '  ' + key
-                        diff[new_key] = walk(node1[key], node2[key], depth + 1)
+                    if isinstance(value1, dict) and \
+                            isinstance(value1, dict):
+                        diff[f'  {key}'] = walk(value1, value2, depth + 1)
                     else:
-                        new_key = '- ' + key
-                        diff[new_key] = node1[key]
-                        new_key = '+ ' + key
-                        diff[new_key] = node2[key]
+                        diff[f'- {key}'] = value1
+                        diff[f'+ {key}'] = value2
             elif key in node1:
-                new_key = '- ' + key
-                diff[new_key] = node1[key]
+                diff[f'- {key}'] = value1
             else:
-                new_key = '+ ' + key
-                diff[new_key] = node2[key]
+                diff[f'+ {key}'] = value2
         return diff
 
     return walk(file1, file2, 1)
 
 
 def clean_booleans(_dict):
-
     for key in _dict:
         if isinstance(_dict[key], dict):
             clean_booleans(_dict[key])
@@ -97,5 +95,5 @@ def clean_booleans(_dict):
                 _dict[key] = 'true'
             elif _dict[key] is False:
                 _dict[key] = 'false'
-            elif _dict[key] == None:
+            elif _dict[key] is None:
                 _dict[key] = 'null'
