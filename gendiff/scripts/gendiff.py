@@ -70,7 +70,7 @@ def create_diff(file1: dict, file2: dict):
                     diff[f'  {key}'] = node1[key]
                 else:
                     if isinstance(node1[key], dict) and \
-                            isinstance(node1[key], dict):
+                            isinstance(node2[key], dict):
                         diff[f'  {key}'] = walk(node1[key], node2[key], depth + 1)
                     else:
                         diff[f'- {key}'] = node1[key]
