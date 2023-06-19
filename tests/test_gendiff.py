@@ -22,3 +22,4 @@ def test_deep_diff():
     file_path4 = 'tests/fixtures/file4.json'
     file_path_expected = 'tests/fixtures/expected3.txt'
     assert generate_diff(file_path3, file_path4) == (open(file_path_expected).read())
+
