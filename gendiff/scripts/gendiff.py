@@ -1,6 +1,5 @@
 import argparse
 import json
-
 import yaml
 
 
@@ -18,8 +17,7 @@ if __name__ == '__main__':
     main()
 
 
-def generate_diff(file_path1, file_path2):
-
+def generate_diff(file_path1, file_path2, formatter='stylish'):
     if file_path1[-5:] == '.json' and file_path2[-5:] == '.json':
         file1 = json.load(open(file_path1))
         file2 = json.load(open(file_path2))
@@ -33,37 +31,71 @@ def generate_diff(file_path1, file_path2):
 
     clean_booleans(file1)
     clean_booleans(file2)
+    if formatter == 'stylish':
+        return stylish(create_diff(file1, file2))
 
-    return parser(file1, file2)
 
+def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
+    def walk(node, depth):
 
-def parser(file1: dict, file2: dict):
-
-    keys = set(file1.keys())
-    keys.update(file2.keys())
-    keys = sorted(keys)
-
-    result = '{'
-    for key in keys:
-        if key in file1 and key in file2:
-            if file1[key] == file2[key]:
-                result = f'{result}\n    {key}: {file1[key]}'
+        result = '{\n'
+        for key in node:
+            if isinstance(node[key], dict):
+                add = walk(node[key], depth + 1)
             else:
-                result = f'{result}\n  - {key}: ' \
-                         f'{file1[key]}\n  + {key}: {file2[key]}'
-        elif key in file1:
-            result = f'{result}\n  - {key}: {file1[key]}'
-        else:
-            result = f'{result}\n  + {key}: {file2[key]}'
-    result += '\n}'
+                add = str(node[key])
 
-    return result
+            result = f'{result}{((spacesCount * depth) - 2) * replacer}{str(key)}: {add}\n'
+
+        result += replacer * (depth - 1) * spacesCount + '}'
+
+        return result
+
+    return walk(diff_string, 1)
+
+
+def create_diff(file1: dict, file2: dict):
+    def walk(node1: dict, node2: dict, depth=0):
+
+        keys = set(node1.keys())
+        keys.update(node2.keys())
+        keys = sorted(keys)
+        diff = {}
+
+        for key in keys:
+            if key in node1 and key in node2:
+                if node1[key] == node2[key]:
+                    new_key = '  ' + key
+                    diff[new_key] = node1[key]
+                else:
+                    if isinstance(node1[key], dict) and isinstance(node2[key], dict):
+                        new_key = '  ' + key
+                        diff[new_key] = walk(node1[key], node2[key], depth + 1)
+                    else:
+                        new_key = '- ' + key
+                        diff[new_key] = node1[key]
+                        new_key = '+ ' + key
+                        diff[new_key] = node2[key]
+            elif key in node1:
+                new_key = '- ' + key
+                diff[new_key] = node1[key]
+            else:
+                new_key = '+ ' + key
+                diff[new_key] = node2[key]
+        return diff
+
+    return walk(file1, file2, 1)
 
 
 def clean_booleans(_dict):
 
     for key in _dict:
-        if _dict[key] is True:
-            _dict[key] = 'true'
-        elif _dict[key] is False:
-            _dict[key] = 'false'
+        if isinstance(_dict[key], dict):
+            clean_booleans(_dict[key])
+        else:
+            if _dict[key] is True:
+                _dict[key] = 'true'
+            elif _dict[key] is False:
+                _dict[key] = 'false'
+            elif _dict[key] == None:
+                _dict[key] = 'null'
