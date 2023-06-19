@@ -65,22 +65,20 @@ def create_diff(file1: dict, file2: dict):
         diff = {}
 
         for key in keys:
-            value1 = node1[key]
-            value2 = node2[key]
             if key in node1 and key in node2:
-                if value1 == value2:
-                    diff[f'  {key}'] = value1
+                if node1[key] == node2[key]:
+                    diff[f'  {key}'] = node1[key]
                 else:
-                    if isinstance(value1, dict) and \
-                            isinstance(value1, dict):
-                        diff[f'  {key}'] = walk(value1, value2, depth + 1)
+                    if isinstance(node1[key], dict) and \
+                            isinstance(node1[key], dict):
+                        diff[f'  {key}'] = walk(node1[key], node2[key], depth + 1)
                     else:
-                        diff[f'- {key}'] = value1
-                        diff[f'+ {key}'] = value2
+                        diff[f'- {key}'] = node1[key]
+                        diff[f'+ {key}'] = node2[key]
             elif key in node1:
-                diff[f'- {key}'] = value1
+                diff[f'- {key}'] = node1[key]
             else:
-                diff[f'+ {key}'] = value2
+                diff[f'+ {key}'] = node2[key]
         return diff
 
     return walk(file1, file2, 1)
