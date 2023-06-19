@@ -1,6 +1,6 @@
 from gendiff.scripts.gendiff import generate_diff
 
-def test_generate_diff():
+def test_generate_diff1():
 
     file_path1 = 'tests/fixtures/file1.json'
     file_path2 = 'tests/fixtures/file2.json'
@@ -8,7 +8,7 @@ def test_generate_diff():
 
     assert generate_diff(file_path1, file_path2) == (open(file_path_expected).read())
 
-def test_parser():
+def test_generate_diff2():
 
     file_path1 = 'tests/fixtures/filepath1.yml'
     file_path2 = 'tests/fixtures/filepath2.yml'
