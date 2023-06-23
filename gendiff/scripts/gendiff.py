@@ -35,7 +35,7 @@ def generate_diff(file_path1, file_path2, formatter='stylish'):
         return stylish(create_diff(file1, file2))
 
 
-def stylish(diff_string, replacer='.', spacesCount=4) -> str:
+def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
     def walk(node, depth):
 
         result = '{\n'
