@@ -35,7 +35,7 @@ def generate_diff(file_path1, file_path2, formatter='stylish'):
         return stylish(create_diff(file1, file2))
 
 
-def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
+def stylish(diff_string, replacer='.', spacesCount=4) -> str:
     def walk(node, depth):
 
         result = '{\n'
@@ -46,9 +46,14 @@ def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
                 add = str(node[key])
 
             space = ((spacesCount * depth) - 2) * replacer
-            result = f'{result}{space}{str(key)}: {add}\n'
 
-        result += replacer * (depth - 1) * spacesCount + '}'
+            if key[:3] == '+ ' or key[:3] == '- ':
+                result = f'{result}{space}{str(key)}: {add}\n'
+            else:
+                result = f'{result}{space}  {str(key)}: {add}\n'
+
+
+        result += replacer * ((spacesCount * (depth - 1)) - 2) + '}'
 
         return result
 
@@ -67,11 +72,11 @@ def create_diff(file1: dict, file2: dict):
         for key in keys:
             if key in node1 and key in node2:
                 if node1[key] == node2[key]:
-                    diff[f'  {key}'] = node1[key]
+                    diff[f'{key}'] = node1[key]
                 else:
                     if isinstance(node1[key], dict) and \
                             isinstance(node2[key], dict):
-                        diff[f'  {key}'] = walk(node1[key], node2[key], depth + 1)
+                        diff[f'{key}'] = walk(node1[key], node2[key], depth + 1)
                     else:
                         diff[f'- {key}'] = node1[key]
                         diff[f'+ {key}'] = node2[key]
