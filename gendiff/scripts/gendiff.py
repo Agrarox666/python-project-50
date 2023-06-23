@@ -4,6 +4,7 @@ import yaml
 
 from gendiff.scripts.plain import plain
 from gendiff.scripts.stylish import stylish
+from gendiff.scripts.json_formatter import json_formatter
 
 
 def main():
@@ -20,7 +21,7 @@ if __name__ == '__main__':
     main()
 
 
-def generate_diff(file_path1, file_path2, formatter='stylish.py'):
+def generate_diff(file_path1, file_path2, formatter='stylish'):
     if file_path1[-5:] == '.json' and file_path2[-5:] == '.json':
         file1 = json.load(open(file_path1))
         file2 = json.load(open(file_path2))
@@ -34,10 +35,12 @@ def generate_diff(file_path1, file_path2, formatter='stylish.py'):
 
     clean_booleans(file1)
     clean_booleans(file2)
-    if formatter == 'stylish.py':
+    if formatter == 'stylish':
         return stylish(create_diff(file1, file2))
     elif formatter == 'plain':
         return plain(create_diff(file1, file2))
+    elif formatter == 'json':
+        return json_formatter(create_diff(file1, file2))
 
 # flake8: noqa: C901
 def create_diff(file1: dict, file2: dict):

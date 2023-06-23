@@ -1,4 +1,4 @@
-def plain(diff_string) -> str:
+def plain(diff) -> str:
     def walk(node, path=''):
 
         result = ''
@@ -20,7 +20,7 @@ def plain(diff_string) -> str:
 
         return result
 
-    return walk(diff_string)
+    return walk(diff)
 
 # flake8: noqa: C901
 def plain_switch(key, path, value) -> str:

@@ -1,4 +1,4 @@
-def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
+def stylish(diff, replacer=' ', spacesCount=4) -> str:
     def walk(node, depth):
 
         result = '{\n'
@@ -19,4 +19,4 @@ def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
 
         return result
 
-    return walk(diff_string, 1)
+    return walk(diff, 1)
