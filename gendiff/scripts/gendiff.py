@@ -52,7 +52,7 @@ def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
             else:
                 result = f'{result}{space}  {str(key)}: {add}\n'
 
-        result += replacer * ((spacesCount * (depth - 1)) - 2) + '}'
+        result += replacer * (spacesCount * (depth - 1)) + '}'
 
         return result
 
