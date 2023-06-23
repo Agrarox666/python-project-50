@@ -10,7 +10,7 @@ def main():
     parser.add_argument('second_file', type=str)
     parser.add_argument('-f', '--format', help='set format of output')
     args = parser.parse_args()
-    print(generate_diff(args.first_file, args.second_file))
+    print(generate_diff(args.first_file, args.second_file, args.format))
 
 
 if __name__ == '__main__':
@@ -33,6 +33,8 @@ def generate_diff(file_path1, file_path2, formatter='stylish'):
     clean_booleans(file2)
     if formatter == 'stylish':
         return stylish(create_diff(file1, file2))
+    elif formatter == 'plain':
+        return plain(create_diff(file1, file2))
 
 
 def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
@@ -47,8 +49,8 @@ def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
 
             space = ((spacesCount * depth) - 2) * replacer
 
-            if key[:2] == '+ ' or key[:2] == '- ':
-                result = f'{result}{space}{str(key)}: {add}\n'
+            if '+' in key or '-' in key:
+                result = f'{result}{space}{str(key).strip()}: {add}\n'
             else:
                 result = f'{result}{space}  {str(key)}: {add}\n'
 
@@ -58,6 +60,48 @@ def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
 
     return walk(diff_string, 1)
 
+
+def plain(diff_string) -> str:
+    def walk(node, path=''):
+
+        result = ''
+        for key in node:
+
+            normalized_key = key.replace('+', '').replace('-', '').strip()
+            if path != '':
+                new_path = f'{path}.{normalized_key}'
+            else:
+                new_path = normalized_key
+
+            if isinstance(node[key], dict):
+                if '+' in key or '-' in key:
+                    result += plain_switch(key, new_path, node[key])
+                else:
+                    result += walk(node[key], new_path)
+            else:
+                result += (plain_switch(key, new_path, node[key]))
+
+        return result
+
+    return walk(diff_string)
+
+
+def plain_switch(key, path, value) -> str:
+    if isinstance(value, dict):
+        value = '[complex value]'
+    elif value != 'true' and value != 'false' and value != 'null':
+        value = f'\'{value}\''
+
+    if key[:3] == ' + ':
+        return f'Property \'{path}\' was added with value: {value}\n'
+    elif key[:3] == ' - ':
+        return f'Property \'{path}\' was removed\n'
+    elif key[:2] == '- ':
+        return f'Property \'{path}\' was updated. From {value} to '
+    elif key[:2] == '+ ':
+        return f'{value}\n'
+    else:
+        return ''
 
 # flake8: noqa: C901
 def create_diff(file1: dict, file2: dict):
@@ -80,9 +124,9 @@ def create_diff(file1: dict, file2: dict):
                         diff[f'- {key}'] = node1[key]
                         diff[f'+ {key}'] = node2[key]
             elif key in node1:
-                diff[f'- {key}'] = node1[key]
+                diff[f' - {key}'] = node1[key]
             else:
-                diff[f'+ {key}'] = node2[key]
+                diff[f' + {key}'] = node2[key]
         return diff
 
     return walk(file1, file2, 1)
