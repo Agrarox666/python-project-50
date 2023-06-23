@@ -47,11 +47,10 @@ def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
 
             space = ((spacesCount * depth) - 2) * replacer
 
-            if key[:3] == '+ ' or key[:3] == '- ':
+            if key[:2] == '+ ' or key[:2] == '- ':
                 result = f'{result}{space}{str(key)}: {add}\n'
             else:
                 result = f'{result}{space}  {str(key)}: {add}\n'
-
 
         result += replacer * ((spacesCount * (depth - 1)) - 2) + '}'
 
