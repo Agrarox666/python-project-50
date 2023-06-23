@@ -42,6 +42,7 @@ def generate_diff(file_path1, file_path2, formatter='stylish'):
     elif formatter == 'json':
         return json_formatter(create_diff(file1, file2))
 
+
 # flake8: noqa: C901
 def create_diff(file1: dict, file2: dict):
     def walk(node1: dict, node2: dict, depth=0):
