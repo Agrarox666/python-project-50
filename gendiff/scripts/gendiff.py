@@ -2,6 +2,9 @@ import argparse
 import json
 import yaml
 
+from gendiff.scripts.plain import plain
+from gendiff.scripts.stylish import stylish
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -17,7 +20,7 @@ if __name__ == '__main__':
     main()
 
 
-def generate_diff(file_path1, file_path2, formatter='stylish'):
+def generate_diff(file_path1, file_path2, formatter='stylish.py'):
     if file_path1[-5:] == '.json' and file_path2[-5:] == '.json':
         file1 = json.load(open(file_path1))
         file2 = json.load(open(file_path2))
@@ -31,77 +34,10 @@ def generate_diff(file_path1, file_path2, formatter='stylish'):
 
     clean_booleans(file1)
     clean_booleans(file2)
-    if formatter == 'stylish':
+    if formatter == 'stylish.py':
         return stylish(create_diff(file1, file2))
     elif formatter == 'plain':
         return plain(create_diff(file1, file2))
-
-
-def stylish(diff_string, replacer=' ', spacesCount=4) -> str:
-    def walk(node, depth):
-
-        result = '{\n'
-        for key in node:
-            if isinstance(node[key], dict):
-                add = walk(node[key], depth + 1)
-            else:
-                add = str(node[key])
-
-            space = ((spacesCount * depth) - 2) * replacer
-
-            if '+' in key or '-' in key:
-                result = f'{result}{space}{str(key).strip()}: {add}\n'
-            else:
-                result = f'{result}{space}  {str(key)}: {add}\n'
-
-        result += replacer * (spacesCount * (depth - 1)) + '}'
-
-        return result
-
-    return walk(diff_string, 1)
-
-
-def plain(diff_string) -> str:
-    def walk(node, path=''):
-
-        result = ''
-        for key in node:
-
-            normalized_key = key.replace('+', '').replace('-', '').strip()
-            if path != '':
-                new_path = f'{path}.{normalized_key}'
-            else:
-                new_path = normalized_key
-
-            if isinstance(node[key], dict):
-                if '+' in key or '-' in key:
-                    result += plain_switch(key, new_path, node[key])
-                else:
-                    result += walk(node[key], new_path)
-            else:
-                result += (plain_switch(key, new_path, node[key]))
-
-        return result
-
-    return walk(diff_string)
-
-
-def plain_switch(key, path, value) -> str:
-    if isinstance(value, dict):
-        value = '[complex value]'
-    elif value != 'true' and value != 'false' and value != 'null':
-        value = f'\'{value}\''
-
-    if key[:3] == ' + ':
-        return f'Property \'{path}\' was added with value: {value}\n'
-    elif key[:3] == ' - ':
-        return f'Property \'{path}\' was removed\n'
-    elif key[:2] == '- ':
-        return f'Property \'{path}\' was updated. From {value} to '
-    elif key[:2] == '+ ':
-        return f'{value}\n'
-    else:
-        return ''
 
 # flake8: noqa: C901
 def create_diff(file1: dict, file2: dict):
