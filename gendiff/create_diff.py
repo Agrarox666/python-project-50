@@ -1,6 +1,4 @@
 # flake8: noqa: C901
-
-
 def create_diff(file1: dict, file2: dict):
     def walk(node1: dict, node2: dict, depth=0):
 
