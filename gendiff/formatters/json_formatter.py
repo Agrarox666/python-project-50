@@ -1,5 +1,7 @@
 import json
 
+from gendiff.clean_booleans import format_bool_from_Json_to_Python
+
 
 def json_formatter(diff):
     def walk(node):
@@ -14,20 +16,7 @@ def json_formatter(diff):
 
         return new_diff
 
-    clean_booleans(diff)
+    format_bool_from_Json_to_Python(diff)
     json_diff = json.dumps(walk(diff), indent=2)
 
     return json_diff
-
-
-def clean_booleans(_dict):
-    for key in _dict:
-        if isinstance(_dict[key], dict):
-            clean_booleans(_dict[key])
-        else:
-            if _dict[key] == 'true':
-                _dict[key] = True
-            elif _dict[key] == 'false':
-                _dict[key] = False
-            elif _dict[key] == 'null':
-                _dict[key] = None

@@ -2,6 +2,7 @@
 import json
 import yaml
 
+from gendiff.clean_booleans import format_bool_from_Python_to_Json
 from gendiff.formatters.json_formatter import json_formatter
 from gendiff.formatters.plain_formatter import plain
 from gendiff.formatters.stylish_formatter import stylish
@@ -46,24 +47,11 @@ def generate_diff(file_path1, file_path2, formatter='stylish'):
     else:
         raise Exception
 
-    clean_booleans(file1)
-    clean_booleans(file2)
+    format_bool_from_Python_to_Json(file1)
+    format_bool_from_Python_to_Json(file2)
     if formatter == 'stylish':
         return stylish(create_diff(file1, file2))
     elif formatter == 'plain':
         return plain(create_diff(file1, file2))
     elif formatter == 'json':
         return json_formatter(create_diff(file1, file2))
-
-
-def clean_booleans(_dict):
-    for key in _dict:
-        if isinstance(_dict[key], dict):
-            clean_booleans(_dict[key])
-        else:
-            if _dict[key] is True:
-                _dict[key] = 'true'
-            elif _dict[key] is False:
-                _dict[key] = 'false'
-            elif _dict[key] is None:
-                _dict[key] = 'null'
