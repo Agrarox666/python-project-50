@@ -12,9 +12,10 @@ How to install:
 
 Write the commands below in command line:
 
-1. git clone git@github.com:Agrarox666/python-project-50.git
-2. make build
-3. make install
+    1. git clone git@github.com:Agrarox666/python-project-50.git
+    2. make package-install
+    3. make build
+    4. make install
 
 Now you can use the programm.
 
