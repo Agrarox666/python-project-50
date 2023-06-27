@@ -13,12 +13,23 @@ How to install:
 Write the commands below in command line:
 
 1. git clone git@github.com:Agrarox666/python-project-50.git
+2. make build
+3. make install
 
-2. make 
+Now you can use the programm.
+
+Usage:
+gendiff [-h] [-f FORMAT] first_file second_file
+Available formats:
+
+1. stylish - shows tree-diff
+2. plain - shows plain-diff (the list of changes)
+3. json - shows the diff in json-style 
 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Agrarox666/python-project-50/workflows/hexlet-check/badge.svg)](https://github.com/Agrarox666/python-project-50/actions) [![CI](https://github.com/Agrarox666/python-project-50/actions/workflows/test.yml/badge.svg)](https://github.com/Agrarox666/python-project-50/actions/workflows/test.yml) <a href="https://codeclimate.com/github/Agrarox666/python-project-50/maintainability"><img src="https://api.codeclimate.com/v1/badges/fc1464fbf627ca6f83e8/maintainability" /></a> [![Test Coverage](https://api.codeclimate.com/v1/badges/ab942f403a5d0e3197b6/test_coverage)](https://codeclimate.com/github/Agrarox666/python-project-50/test_coverage)
 
+Examples of using the program:
 [![asciicast](https://asciinema.org/a/kpGrv2V7ayxKShbqBzeYPng6U.svg)](https://asciinema.org/a/kpGrv2V7ayxKShbqBzeYPng6U)
 
 [![asciicast](https://asciinema.org/a/Lmc7YiJMkjzZv6N7IyAKruQcP.svg)](https://asciinema.org/a/Lmc7YiJMkjzZv6N7IyAKruQcP)
