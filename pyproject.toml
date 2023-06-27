@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "hexlet-code"
 version = "0.1.0"
-description = ""
+description = "CLI utility to find diff between 2 files"
 authors = ["Igor Loskutov <omfi017@gmail.com>"]
 readme = "README.md"
 classifiers = [
