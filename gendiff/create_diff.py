@@ -36,16 +36,15 @@ def create_diff(file1: dict, file2: dict):
 
 
 def generate_diff(file_path1, file_path2, formatter='stylish'):
-    if file_path1[-5:] == '.json' and file_path2[-5:] == '.json':
+    if file_path1.endswith('.json') and file_path2.endswith('.json'):
         file1 = json.load(open(file_path1))
         file2 = json.load(open(file_path2))
 
-    elif file_path1[-4:] == '.yml' and file_path2[-4:] == '.yml':
+    elif file_path1.endswith('.yml') and file_path2.endswith('.yml'):
         file1 = yaml.load(open(file_path1), Loader=yaml.FullLoader)
         file2 = yaml.load(open(file_path2), Loader=yaml.FullLoader)
     else:
-        print('Files are in the wrong format')
-        return 0
+        raise Exception
 
     clean_booleans(file1)
     clean_booleans(file2)
