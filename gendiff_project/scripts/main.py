@@ -1,5 +1,5 @@
-from gendiff.cli import get_cli_arguments
-from gendiff.gendiff import generate_diff
+from gendiff_project.cli import get_cli_arguments
+from gendiff_project.gendiff import generate_diff
 
 
 def main():
