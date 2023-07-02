@@ -27,7 +27,7 @@ def plain(diff) -> str:
 def plain_switch(key, path, value) -> str:
     if isinstance(value, dict):
         value = '[complex value]'
-    elif value != 'true' and value != 'false' and value != 'null':
+    elif value != 'true' and value != 'false' and value != 'null' and not isinstance(value, int):
         value = f'\'{value}\''
 
     if key[:3] == ' + ':
