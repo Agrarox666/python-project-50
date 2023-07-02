@@ -3,10 +3,10 @@ import json
 import yaml
 
 from gendiff.clean_booleans import format_bool_from_Python_to_Json
-from gendiff.create_diff import create_diff
 from gendiff.formatters.json_formatter import json_formatter
 from gendiff.formatters.plain_formatter import plain
 from gendiff.formatters.stylish_formatter import stylish
+from gendiff.create_diff import create_diff
 
 
 def generate_diff(file_path1, file_path2, formatter='stylish'):

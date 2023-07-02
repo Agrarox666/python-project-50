@@ -22,6 +22,7 @@ def plain(diff) -> str:
 
     return walk(diff)
 
+
 # flake8: noqa: C901
 def plain_switch(key, path, value) -> str:
     if isinstance(value, dict):
