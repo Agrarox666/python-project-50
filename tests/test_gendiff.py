@@ -30,6 +30,7 @@ def test_plain_diff():
     file_path_expected = 'tests/fixtures/expected4.txt'
     assert generate_diff(file_path3, file_path4, 'plain') == (open(file_path_expected).read())
 
+
 def test_json_diff():
     file_path3 = 'tests/fixtures/file3.json'
     file_path4 = 'tests/fixtures/file4.json'
