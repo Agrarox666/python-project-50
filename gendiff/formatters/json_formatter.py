@@ -1,6 +1,6 @@
 import json
 
-from gendiff_project.clean_booleans import format_bool_from_Json_to_Python
+from gendiff.clean_booleans import format_bool_from_Json_to_Python
 
 
 def json_formatter(diff):
