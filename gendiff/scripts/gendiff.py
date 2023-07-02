@@ -1,6 +1,8 @@
 import json
 
 import yaml
+from gendiff.cli import get_cli_arguments
+
 from gendiff.create_diff import create_diff
 
 from gendiff.clean_booleans import format_bool_from_Python_to_Json
@@ -28,3 +30,7 @@ def generate_diff(file_path1, file_path2, formatter='stylish'):
         return plain(create_diff(file1, file2))
     elif formatter == 'json':
         return json_formatter(create_diff(file1, file2))
+
+
+if __name__ == '__main__':
+    print(generate_diff(*get_cli_arguments()))
