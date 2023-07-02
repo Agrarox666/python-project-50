@@ -1,14 +1,14 @@
 import json
 
 import yaml
-from gendiff.cli import get_cli_arguments
+from gendiff_project.cli import get_cli_arguments
 
-from gendiff.create_diff import create_diff
+from gendiff_project.create_diff import create_diff
 
-from gendiff.clean_booleans import format_bool_from_Python_to_Json
-from gendiff.formatters.json_formatter import json_formatter
-from gendiff.formatters.plain_formatter import plain
-from gendiff.formatters.stylish_formatter import stylish
+from gendiff_project.clean_booleans import format_bool_from_Python_to_Json
+from gendiff_project.formatters.json_formatter import json_formatter
+from gendiff_project.formatters.plain_formatter import plain
+from gendiff_project.formatters.stylish_formatter import stylish
 
 
 def generate_diff(file_path1, file_path2, formatter='stylish'):
