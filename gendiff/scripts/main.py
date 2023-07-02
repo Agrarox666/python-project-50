@@ -1,5 +1,4 @@
 import json
-
 import yaml
 
 from gendiff.clean_booleans import format_bool_from_Python_to_Json
