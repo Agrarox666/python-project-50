@@ -32,5 +32,9 @@ def generate_diff(file_path1, file_path2, formatter='stylish'):
         return json_formatter(create_diff(file1, file2))
 
 
+def main():
+    print(generate_diff(*get_cli_arguments()))
+
+
 if __name__ == '__main__':
     print(generate_diff(*get_cli_arguments()))
