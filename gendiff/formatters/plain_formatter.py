@@ -18,9 +18,9 @@ def plain(diff) -> str:
             else:
                 result += (plain_switch(key, new_path, node[key]))
 
-        return result.strip()
+        return result
 
-    return walk(diff)
+    return walk(diff).strip()
 
 
 # flake8: noqa: C901
