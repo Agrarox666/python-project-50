@@ -10,7 +10,7 @@ def generate_diff(file_path1, file_path2, formatter='stylish'):
     file1 = recognize(*get_data_from_file(file_path1))
     file2 = recognize(*get_data_from_file(file_path2))
 
-    format_bool_from_Python_to_Json(file1)
-    format_bool_from_Python_to_Json(file2)
+    formatted_file1 = format_bool_from_Python_to_Json(file1)
+    formatted_file2 = format_bool_from_Python_to_Json(file2)
 
-    return select_formats(file1, file2, formatter)
+    return select_formats(formatted_file1, formatted_file2, formatter)
