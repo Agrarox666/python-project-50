@@ -1,6 +1,3 @@
-import copy
-
-
 def format_bool_from_Python_to_Json(some_dict):
     new_dict = some_dict
 
