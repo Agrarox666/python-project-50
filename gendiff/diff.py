@@ -1,30 +1,18 @@
-import json
-
-import yaml
-
 from gendiff.clean_booleans import format_bool_from_Python_to_Json
-from gendiff.create_diff import create_diff
-from gendiff.formatters.json_formatter import json_formatter
-from gendiff.formatters.plain_formatter import plain
-from gendiff.formatters.stylish_formatter import stylish
+
+from gendiff.get_data import get_data_from_file
+from gendiff.recognize import recognize
+from gendiff.formats import select_formats
 
 
 def generate_diff(file_path1, file_path2, formatter='stylish'):
-    if file_path1.endswith('.json') and file_path2.endswith('.json'):
-        file1 = json.load(open(file_path1))
-        file2 = json.load(open(file_path2))
 
-    elif file_path1.endswith('.yml') and file_path2.endswith('.yml'):
-        file1 = yaml.load(open(file_path1), Loader=yaml.FullLoader)
-        file2 = yaml.load(open(file_path2), Loader=yaml.FullLoader)
-    else:
-        raise Exception
+    file1 = recognize(*get_data_from_file(file_path1))
+    file2 = recognize(*get_data_from_file(file_path2))
 
     format_bool_from_Python_to_Json(file1)
     format_bool_from_Python_to_Json(file2)
-    if formatter == 'stylish':
-        return stylish(create_diff(file1, file2))
-    elif formatter == 'plain':
-        return plain(create_diff(file1, file2))
-    elif formatter == 'json':
-        return json_formatter(create_diff(file1, file2))
+
+    return select_formats(file1, file2, formatter)
+
+
