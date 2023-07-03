@@ -3,10 +3,7 @@ from gendiff.cli import get_cli_arguments
 
 
 def main():
-    arguments = list(get_cli_arguments())
-    if arguments[2] is None:
-        arguments[2] = 'stylish'
-    diff = generate_diff(*arguments)
+    diff = generate_diff(*get_cli_arguments())
     print(diff)
 
 
