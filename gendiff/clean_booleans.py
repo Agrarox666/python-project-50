@@ -1,24 +1,31 @@
+import copy
+
+
 def format_bool_from_Python_to_Json(_dict):
-    for key in _dict:
-        if isinstance(_dict[key], dict):
-            format_bool_from_Python_to_Json(_dict[key])
+    new_dict = copy.deepcopy(_dict)
+    for key in new_dict:
+        if isinstance(new_dict[key], dict):
+            return format_bool_from_Python_to_Json(new_dict[key])
         else:
-            if _dict[key] is True:
-                _dict[key] = 'true'
-            elif _dict[key] is False:
-                _dict[key] = 'false'
-            elif _dict[key] is None:
-                _dict[key] = 'null'
+            if new_dict[key] is True:
+                new_dict[key] = 'true'
+            elif new_dict[key] is False:
+                new_dict[key] = 'false'
+            elif new_dict[key] is None:
+                new_dict[key] = 'null'
+    return format_bool_from_Python_to_Json(new_dict)
 
 
 def format_bool_from_Json_to_Python(_dict):
-    for key in _dict:
-        if isinstance(_dict[key], dict):
-            format_bool_from_Json_to_Python(_dict[key])
+    new_dict = copy.deepcopy(_dict)
+    for key in new_dict:
+        if isinstance(new_dict[key], dict):
+            return format_bool_from_Json_to_Python(new_dict[key])
         else:
-            if _dict[key] == 'true':
-                _dict[key] = True
-            elif _dict[key] == 'false':
-                _dict[key] = False
-            elif _dict[key] == 'null':
-                _dict[key] = None
+            if new_dict[key] == 'true':
+                new_dict[key] = True
+            elif new_dict[key] == 'false':
+                new_dict[key] = False
+            elif new_dict[key] == 'null':
+                new_dict[key] = None
+    return format_bool_from_Json_to_Python(new_dict)
