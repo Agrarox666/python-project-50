@@ -14,5 +14,3 @@ def generate_diff(file_path1, file_path2, formatter='stylish'):
     format_bool_from_Python_to_Json(file2)
 
     return select_formats(file1, file2, formatter)
-
-

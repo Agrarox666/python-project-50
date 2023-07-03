@@ -8,4 +8,5 @@ def recognize(data, extension):
     elif extension == 'yaml' or extension == 'yml':
         return yaml.load(data, Loader=yaml.FullLoader)
     else:
-        raise Exception('Unknown file extension. Please try again. Available extensions: json, yaml.')
+        raise Exception('Unknown file extension. Please try again. '
+                        'Available extensions: json, yaml.')

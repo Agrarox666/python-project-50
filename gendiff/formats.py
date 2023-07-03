@@ -12,4 +12,5 @@ def select_formats(file1, file2, formatter):
     elif formatter == 'json':
         return json_formatter(create_diff(file1, file2))
     else:
-        raise Exception('Unknown format. Available formats are: stylish(default), plain, json')
+        raise Exception('Unknown format. Available formats are:'
+                        ' stylish(default), plain, json')
