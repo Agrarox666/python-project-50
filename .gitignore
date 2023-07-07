@@ -2,6 +2,3 @@
 Makefile
 __pycache__
 dist/
-setup.cfg
-poetry.lock
-pyproject.toml
