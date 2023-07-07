@@ -3,7 +3,7 @@ from gendiff.booleans_cleaner import format_bool_from_python_to_json
 from gendiff.data_reader import read_data
 from gendiff.data_reader import define_extension
 from gendiff.data_loader import recognize
-from gendiff.formats import select_formats
+from gendiff.format_selector import select_formats
 
 
 def generate_diff(file_path1, file_path2, formatter='stylish'):
