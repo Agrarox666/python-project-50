@@ -1,6 +1,6 @@
 import json
 
-from gendiff.clean_booleans import format_bool_from_Json_to_Python
+from gendiff.booleans_cleaner import format_bool_from_json_to_python
 
 
 def json_formatter(diff):
@@ -16,7 +16,7 @@ def json_formatter(diff):
 
         return new_diff
 
-    format_bool_from_Json_to_Python(diff)
+    format_bool_from_json_to_python(diff)
     json_diff = json.dumps(walk(diff), indent=2)
 
     return json_diff

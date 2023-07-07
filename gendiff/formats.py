@@ -1,4 +1,4 @@
-from gendiff.create_diff import create_diff
+from gendiff.diff_creator import create_diff
 from gendiff.formatters.json_formatter import json_formatter
 from gendiff.formatters.plain_formatter import plain
 from gendiff.formatters.stylish_formatter import stylish
