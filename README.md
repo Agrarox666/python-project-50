@@ -24,6 +24,7 @@ Now you can use the programm.
 
 Usage:
 gendiff [-h] [-f FORMAT] first_file second_file
+
 Available formats:
 
 1. stylish - shows tree-diff
